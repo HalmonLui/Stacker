@@ -27,8 +27,8 @@ int main(void)
 {
 	
 	
-	
-	int x_0, y0, y1, y_2, y_3, y_4, y_5, x_1, x_2, x_3, x_4, x_5, x_L1, x_L2, x_L3, x_L4, x_dir, x, color, color_1;
+	int xline1, xline2;
+	int x_0, y0, y1, y_2, y_3, y_4, y_5, x_1, x_2, x_3, x_4, x_5, x_L1, x_L2, x_L3, x_L4, x_dir, x, color, color_1, blue;
 	int x_0a, y_3a, x_1a, x_2a, x_3a, y_2a, x_4a, x_5a, x_L1a, x_L2a, x_L3a, x_L4a;
 	int x_0b, y_3b, x_1b, x_2b, x_3b, y_2b, x_4b, x_5b, x_L1b, x_L2b, x_L3b, x_L4b;
 	int SW_value = 0;
@@ -112,8 +112,12 @@ int main(void)
 	x_dir = 30;	//boxes move in intervals of 30 pixels
 	color = 0xF800;	// red
 	color_1 = 0; //black
-	
+	blue = 0x001F //blue
 	draw_box(x_0, y0, x_1, y1, color);
+	
+	
+	xline1 = 3;
+	xline2 = 4;
 	while (1)
 	{
 		while(!timeout)
@@ -126,7 +130,12 @@ int main(void)
 		}
 		
 		
-		
+		for (lines; lines <= 320; lines=lines+30){
+			draw_box(xline1, 0, xline2, 240, blue); //draws lines for the background image
+			xline1=xline1+30;
+			xline2=xline2+30;
+		}
+	
 		if ((x_0 <= 0) || (x_1 >= (291))) //Changes direction of red box
 		{
 			x_dir = -x_dir;
