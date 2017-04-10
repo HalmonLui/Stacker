@@ -13,7 +13,6 @@
             <source_file filepath="true">PS2_ISR2.c</source_file>
             <source_file filepath="true">exception_handler.c</source_file>
             <source_file filepath="true">globals.c</source_file>
-            <source_file filepath="true">interrupt_example.c</source_file>
             <source_file filepath="true">interval_timer_ISR2.c</source_file>
             <source_file filepath="true">lineAnimation2.c</source_file>
         </source_files>
