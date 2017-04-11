@@ -26,11 +26,10 @@ int main(void)
 
 {
 	
-	int rowA;
+	int rowA,mover;
 	int xline1, xline2, lines, yline1, yline2,linesy;
-	int x_0, y0, y1, y_2, y_3, y_4, y_5, x_1, x_2, x_3, x_4, x_5, x_L1, x_L2, x_L3, x_L4, x_dir, x, red, black, blue;
-	int x_0a, y_3a, x_1a, x_2a, x_3a, y_2a, x_4a, x_5a, x_L1a, x_L2a, x_L3a, x_L4a;
-	int x_0b, y_3b, x_1b, x_2b, x_3b, y_2b, x_4b, x_5b, x_L1b, x_L2b, x_L3b, x_L4b;
+	int x_0, y0, y1, y_2, y_3, y_4, y_5, x_1, x_2, x_3, x_4, x_5, x_6,x_7,x_8,x_9, x_dir, x, red, black, blue;
+	int x_0a, x_1a,x_6a,x_7a,x_8a,x_9a;
 	int SW_value = 0;
 	volatile int * interval_timer_ptr = (int *) 0xFF202000;	// interal timer base address
 	volatile int * PS2_ptr = (int *) 0xFF200100;			// PS/2 keyboard port address
@@ -69,24 +68,10 @@ int main(void)
 	x_3 = 33;	//black box
 	x_4 = 124;	//black box
 	x_5 = 153;	//black box
-
-	
-	//row B
-	x_0a = 32; 	//red box
-	x_1a = 126;	//red box
-	x_2a = 1;	//black box
-	x_3a = 31;	//black box
-	x_4a = 127;	//black box
-	x_5a = 157;	//black box
-
-	
-	//row C
-	x_0b = 32; 	//red box
-	x_1b = 126;	//red box
-	x_2b = 1;	//black box
-	x_3b = 31;	//black box
-	x_4b = 127;	//black box
-	x_5b = 157;	//black box
+	x_6 = 64; //red box
+	x_7 = 93; //red box
+	x_8 = 94; //red box
+	x_9 = 123; //red box
 
 	
 	y0 = 210;	//height of red box is 30
@@ -116,9 +101,7 @@ int main(void)
 		count++;
 		}
 		
-		
-	
-		if ((x_0 <= 0) || (x_1 >= (291))) //Changes direction of red box
+		if ((x_0 <= 0) || (x_9 >= (291))) //Changes direction of red box
 		{
 			x_dir = -x_dir;
 		}
@@ -126,58 +109,9 @@ int main(void)
 		{
 			x_dir = -x_dir;
 		}
-		if ((x_L1 <= 0) || (x_L2 >= (resolution_x+1))) //Changes direction of lines
-		{
-			x_dir = -x_dir;
-		}
-		if ((x_L3 <= 0) || (x_L4 >= (resolution_x+1))) //Changes direction of lines
-		{
-			x_dir = -x_dir;
-		}
-
-		if ((x_0a <= 0) || (x_1a >= (291))) //Changes direction of red box
-		{
-			x_dir = -x_dir;
-		}
-		if ((x_2a <= 0) || (x_3a >= (resolution_x+1))) //Changes direction of black box (left)
-		{
-			x_dir = -x_dir;
-		}
-		if ((x_L1a <= 0) || (x_L2a >= (resolution_x+1))) //Changes direction of lines
-		{
-			x_dir = -x_dir;
-		}
-		if ((x_L3a <= 0) || (x_L4a >= (resolution_x+1))) //Changes direction of lines
-		{
-			x_dir = -x_dir;
-		}
-		
-		//draws horizontal background lines
-		yline1=20;
-		yline2=21;
-		for (linesy=0; linesy = 20; linesy=linesy+1){//blue lines
-			draw_box(0, yline1, 320, yline2, blue); //draws lines for the background image
-			yline1=yline1+30;//add 30 to left side
-			yline2=yline2+30;//add 30 to right side
-		}
-			
-
-		red = 0xF800;	// RED for DE0-CV  0xF800
 		if (SW_value == 0) {
 			//Row A
-			// Change line position, moving it 30 pixels to the right.
-			x_0 = x_0 + x_dir;
-			x_1 = x_1 + x_dir;
-			x_2 = x_2 + x_dir;
-			x_3 = x_3 + x_dir;
-			x_4 = x_4 + x_dir;
-			x_5 = x_5 + x_dir;
-			x_L1 = x_L1 + x_dir;
-			x_L2 = x_L2 + x_dir;
-			x_L3 = x_L3 + x_dir;
-			x_L4 = x_L4 + x_dir;
-	x_0 = 34; 	//red box
-	x_1 = 63;	//red box
+
 		xline1=3;
 		xline2=4;lines=3;
 		for (lines; lines <= 320; lines=lines+30){//blue lines
@@ -185,87 +119,75 @@ int main(void)
 			xline1=xline1+30;//add 30 to left side
 			xline2=xline2+30;//add 30 to right side
 		}
-		for (rowA=1; rowA<=3; rowA++){//red box
-			draw_box(x_0, y0, x_1, y1, red); //draws red box
-			x_0=x_0+30;
-			x_1=x_1+30;
-		}
-
-			draw_box(x_2, y0, x_3, y1, black); //black box (left)
-			draw_box(x_4, y0, x_5, y1, black); //black box (right)
-//			draw_box(x_L1, y0, x_L2, y1, blue); //Line1
-//			draw_box(x_L3, y0, x_L4, y1, blue); //Line2
-		}
+		x_0=x_0+x_dir;
+		x_1=x_1+x_dir;
+		x_2=x_2+x_dir;
+		x_3=x_3+x_dir;
+		x_4=x_4+x_dir;
+		x_5=x_5+x_dir;
+		x_6=x_6+x_dir;
+		x_7=x_7+x_dir;
+		x_8=x_8+x_dir;
+		x_9=x_9+x_dir;
+		draw_box(x_0, y0, x_1, y1, red); //draws red box
+		draw_box(x_6, y0, x_7, y1, red); //draws red box
+		draw_box(x_8, y0, x_9, y1, red); //draws red box
+		draw_box(x_2, y0, x_3, y1, black); //black box (left)
+		draw_box(x_4, y0, x_5, y1, black); //black box (right)
+	}
+		
+		
+		
 		if (SW_value == 1) {
 			//Row B
-			x_0a = x_0a + x_dir; 
-			x_1a = x_1a + x_dir;
-			x_2a = x_2a + x_dir;
-			x_3a = x_3a + x_dir;
-			x_4a = x_4a + x_dir;
-			x_5a = x_5a + x_dir;
-			x_L1a = x_L1a + x_dir;
-			x_L2a = x_L2a + x_dir;
-			x_L3a = x_L3a + x_dir;
-			x_L4a = x_L4a + x_dir;			
-			draw_box(x_0a, y_3, x_1a, y_2, red);	//Box 1 (red)
-			draw_box(x_2a, y_3, x_3a, y_2, black); //black box (left)
-			draw_box(x_4a, y_3, x_5a, y_2, black); //black box (right)
-//			draw_box(x_L1a, y_3, x_L2a, y_2, black); //Line1
-//			draw_box(x_L3a, y_3, x_L4a, y_2, black); //Line2
-		}
+		x_0=x_0+x_dir;
+		x_1=x_1+x_dir;
+		x_2=x_2+x_dir;
+		x_3=x_3+x_dir;
+		x_4=x_4+x_dir;
+		x_5=x_5+x_dir;
+		x_6=x_6+x_dir;
+		x_7=x_7+x_dir;
+		x_8=x_8+x_dir;
+		x_9=x_9+x_dir;
+		x_0a=x_0;
+		x_1a=x_1;
+		x_6a=x_6;
+		x_7a=x_7;
+		x_8a=x_8;
+		x_9a=x_9;
+		draw_box(x_0, y_3, x_1, y_2, red); //draws red box
+		draw_box(x_6, y_3, x_7, y_2, red); //draws red box
+		draw_box(x_8, y_3, x_9, y_2, red); //draws red box
+		draw_box(x_2, y_3, x_3, y_2, black); //black box (left)
+		draw_box(x_4, y_3, x_5, y_2, black); //black box (right)
+	}
+	 //Random Comment
+		//Row C	
 		if (SW_value == 3) {
-			//Row C
-			if (x_0a < x_0) { //if red is over extended left
-			x_0a=x_0; //sets first black line to shrink red box B
-			draw_box(0, y_3, 320, y_2, black); //resets row B color to black
-			draw_box(x_0a, y_3, x_1a, y_2, red);	//Box B (red)
-			draw_box(x_2a, y_3, x_3a, y_2, black); //black box (left)
-			draw_box(x_4a, y_3, x_5a, y_2, black); //black box (right)
-//			draw_box(x_L1a, y_3, x_L2a, y_2, black); //Line1
-//			draw_box(x_L3a, y_3, x_L4a, y_2, black); //Line2
-			
-			//Starts row C
-			draw_box(x_0, y_5, x_1, y_4, red);	//Box C (red)
-			draw_box(x_2, y_5, x_3, y_4, black); //black box (left)
-			draw_box(x_4, y_5, x_5, y_4, black); //black box (right)
-//			draw_box(x_L1, y_5, x_L2, y_4, black); //Line1
-//			draw_box(x_L3, y_5, x_L4, y_4, black); //Line2
-			}
-			else if (x_1a > x_1) { //if red is over extended right
-			x_1a=x_1; //sets second black line to shrink red box B
-			draw_box(0, y_3, 320, y_2, black); //resets row B color to black
-			draw_box(x_0a, y_3, x_1a, y_2, red);	//Box B (red)
-			draw_box(x_2a, y_3, x_3a, y_2, black); //black box (left)
-			draw_box(x_4a, y_3, x_5a, y_2, black); //black box (right)
-//			draw_box(x_L1a, y_3, x_L2a, y_2, black); //Line1
-//			draw_box(x_L3a, y_3, x_L4a, y_2, black); //Line2
-			
-			//Starts row C
-			x_0b = x_0b + x_dir;
-			x_1b = x_1b + x_dir;
-			x_2b = x_2b + x_dir;
-			x_3b = x_3b + x_dir;
-			x_4b = x_4b + x_dir;
-			x_5b = x_5b + x_dir;
-			x_L1b = x_L1b + x_dir;
-			x_L2b = x_L2b + x_dir;
-			x_L3b = x_L3b + x_dir;
-			x_L4b = x_L4b + x_dir;
-			draw_box(x_0b, y_5, x_1b, y_4, red);	//Box C (red)
-			draw_box(x_2b, y_5, x_3b, y_4, black); //black box (left)
-			draw_box(x_4b, y_5, x_5b, y_4, black); //black box (right)
-//			draw_box(x_L1b, y_5, x_L2b, y_4, black); //Line1
-//			draw_box(x_L3b, y_5, x_L4b, y_4, black); //Line2
-			}
+			x_0=x_0+x_dir;
+			x_1=x_1+x_dir;
+			x_2=x_2+x_dir;
+			x_3=x_3+x_dir;
+			x_4=x_4+x_dir;
+			x_5=x_5+x_dir;
+			x_6=x_6+x_dir;
+			x_7=x_7+x_dir;
+			x_8=x_8+x_dir;
+			x_9=x_9+x_dir;
 
-		}
-		
-		
+			draw_box(x_0a, y_3, x_1a, y_2, get_color(x_0,230)); //draws black box
+			draw_box(x_6a, y_3, x_7a, y_2, get_color(x_6,230)); //draws black box
+			draw_box(x_8a, y_3, x_9a, y_2, get_color(x_8,230)); //draws black box
+			
+		draw_box(x_0, y_5, x_1, y_4, get_color(x_0a,y_3)); //draws red box
+		draw_box(x_6, y_5, x_7, y_4, get_color(x_6a,y_3)); //draws red box
+		draw_box(x_8, y_5, x_9, y_4, get_color(x_8a,y_3)); //draws red box
+		draw_box(x_2, y_5, x_3, y_4, black); //black box (left)
+		draw_box(x_4, y_5, x_5, y_4, black); //black box (right)
 	}
-		
-		
-	}
+	} //closes while
+} //closes main
 
 
 
@@ -305,7 +227,6 @@ void draw_box(int x0, int y0, int x1, int y1, int red)
 {
 	int y;
 	int x;
-	
 	for(y=y0;y<y1;y++)
 	{
 		for(x=x0;x<x1;x++)
@@ -315,14 +236,11 @@ void draw_box(int x0, int y0, int x1, int y1, int red)
 	}
 }
 
-
-
 /* Draw Horizontal Line */
 void draw_hline(int x0, int y0, int x1, int y1, int red)
 {
 	int y=y0;
 	int x;
-	
 	for(x=x0;x<x1;x++)
 	{
 		plot_pixel(x,y,red);
@@ -334,19 +252,32 @@ void draw_vline(int x0, int y0, int x1, int y1, int red)
 {
 	int x=x0;
 	int y;
-	
 	for(y=y0;y<y1;y++)
 	{
 		plot_pixel(x,y,red);
 	}
 }
 
-
-
-
-
 void plot_pixel(int x, int y, short int pixel_color)
 {
 	//*(volatile char *)(pixel_buffer_start + (y << 7)+x) = pixel_color;
 	*(volatile short int *)(pixel_buffer_start + (y << 10) + (x << 1)) = pixel_color; //For DE0-CV
+}
+int get_color(int x_vga, int y_vga) {
+	volatile short *pixel_address = (volatile short*)(0x08000000 + (y_vga<<10) + (x_vga<<1));
+	int color = *pixel_address;
+    //these if statements are in place because sometimes the colors will be negative
+    //if(color == 924) {//color is blue
+ 	//	return 0x39C;
+    //}
+    if(color == -2239) {//color is yellow
+		return 0xF741;
+    }
+    if(color == -1398) {//color is red
+        return 0xFA8A;
+    }
+    //if(color == 6080) {//color is green
+    //    return 0x17C0;
+    //}
+	return color;
 }
