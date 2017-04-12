@@ -25,11 +25,16 @@ void plot_pixel(int, int, short int);
 int main(void)
 
 {
-	
-	int rowA,mover;
 	int xline1, xline2, lines, yline1, yline2,linesy;
-	int x_0, y0, y1, y_2, y_3, y_4, y_5, x_1, x_2, x_3, x_4, x_5, x_6,x_7,x_8,x_9, x_dir, x, red, black, blue;
-	int x_0a, x_1a,x_6a,x_7a,x_8a,x_9a;
+	int x_dir, x;
+	int red, black, blue;
+	int x_0, y0, y1, y_2, y_3, y_4, y_5, y_6,y_7,y_8,y_9,y_10,y_11;
+	int x_1, x_2, x_3, x_4, x_5, x_6,x_7,x_8,x_9;
+	int x_0a, x_1a, x_2a, x_3a, x_4a, x_5a, x_6a, x_7a, x_8a, x_9a;
+	int x_0b, x_1b, x_2b, x_3b, x_4b, x_5b, x_6b, x_7b, x_8b, x_9b;
+	int x_0c, x_1c, x_2c, x_3c, x_4c, x_5c, x_6c, x_7c, x_8c, x_9c;
+	int x_0d, x_1d, x_2d, x_3d, x_4d, x_5d, x_6d, x_7d, x_8d, x_9d;
+	int x_0e, x_1e, x_2e, x_3e, x_4e, x_5e, x_6e, x_7e, x_8e, x_9e;
 	int SW_value = 0;
 	volatile int * interval_timer_ptr = (int *) 0xFF202000;	// interal timer base address
 	volatile int * PS2_ptr = (int *) 0xFF200100;			// PS/2 keyboard port address
@@ -83,6 +88,9 @@ int main(void)
 	//Coordinates for 3rd row box
 	y_4 = 178;	//height of red box is 30
 	y_5 = 148;
+	//Coordinates for 4th row box
+	y_6 = 147;
+	y_7 = 117;
 	
 	
 	x_dir = 30;	//boxes move in intervals of 30 pixels
@@ -152,6 +160,10 @@ int main(void)
 		x_9=x_9+x_dir;
 		x_0a=x_0;
 		x_1a=x_1;
+		x_2a=x_2;
+		x_3a=x_3;
+		x_4a=x_4;
+		x_5a=x_5;
 		x_6a=x_6;
 		x_7a=x_7;
 		x_8a=x_8;
@@ -161,8 +173,8 @@ int main(void)
 		draw_box(x_8, y_3, x_9, y_2, red); //draws red box
 		draw_box(x_2, y_3, x_3, y_2, black); //black box (left)
 		draw_box(x_4, y_3, x_5, y_2, black); //black box (right)
-	}
-	 //Random Comment
+		}
+
 		//Row C	
 		if (SW_value == 3) {
 			x_0=x_0+x_dir;
@@ -175,17 +187,63 @@ int main(void)
 			x_7=x_7+x_dir;
 			x_8=x_8+x_dir;
 			x_9=x_9+x_dir;
-
-			draw_box(x_0a, y_3, x_1a, y_2, get_color(x_0,230)); //draws black box
-			draw_box(x_6a, y_3, x_7a, y_2, get_color(x_6,230)); //draws black box
-			draw_box(x_8a, y_3, x_9a, y_2, get_color(x_8,230)); //draws black box
-			
+			x_0b=x_0;
+			x_1b=x_1;
+			x_2b=x_2;
+			x_3b=x_3;
+			x_4b=x_4;
+			x_5b=x_5;
+			x_6b=x_6;
+			x_7b=x_7;
+			x_8b=x_8;
+			x_9b=x_9;
+			draw_box(x_0a, y_3, x_1a, y_2, get_color(x_0a,230)); //draws black box
+			draw_box(x_6a, y_3, x_7a, y_2, get_color(x_6a,230)); //draws black box
+			draw_box(x_8a, y_3, x_9a, y_2, get_color(x_8a,230)); //draws black box
+			draw_box(x_2a, y_3, x_3a, y_2, black); //black box (left)
+			draw_box(x_4a, y_3, x_5a, y_2, black); //black box (right)
+		
 		draw_box(x_0, y_5, x_1, y_4, get_color(x_0a,y_3)); //draws red box
 		draw_box(x_6, y_5, x_7, y_4, get_color(x_6a,y_3)); //draws red box
 		draw_box(x_8, y_5, x_9, y_4, get_color(x_8a,y_3)); //draws red box
 		draw_box(x_2, y_5, x_3, y_4, black); //black box (left)
 		draw_box(x_4, y_5, x_5, y_4, black); //black box (right)
-	}
+		}
+		
+		//Row D
+		if (SW_value == 7) {
+			x_0=x_0+x_dir;
+			x_1=x_1+x_dir;
+			x_2=x_2+x_dir;
+			x_3=x_3+x_dir;
+			x_4=x_4+x_dir;
+			x_5=x_5+x_dir;
+			x_6=x_6+x_dir;
+			x_7=x_7+x_dir;
+			x_8=x_8+x_dir;
+			x_9=x_9+x_dir;
+			x_0c=x_0;
+			x_1c=x_1;
+			x_2c=x_2;
+			x_3c=x_3;
+			x_4c=x_4;
+			x_5c=x_5;
+			x_6c=x_6;
+			x_7c=x_7;
+			x_8c=x_8;
+			x_9c=x_9;
+			draw_box(x_0b, y_5, x_1b, y_4, get_color(x_0b,200)); //draws black box
+			draw_box(x_6b, y_5, x_7b, y_4, get_color(x_6b,200)); //draws black box
+			draw_box(x_8b, y_5, x_9b, y_4, get_color(x_8b,200)); //draws black box
+			draw_box(x_2b, y_5, x_3b, y_4, black); //black box (left)
+			draw_box(x_4b, y_5, x_5b, y_4, black); //black box (right)
+			
+		draw_box(x_0, y_7, x_1, y_6, get_color(x_0b,y_5)); //draws red box
+		draw_box(x_6, y_7, x_7, y_6, get_color(x_6b,y_5)); //draws red box
+		draw_box(x_8, y_7, x_9, y_6, get_color(x_8b,y_5)); //draws red box
+		draw_box(x_2, y_7, x_3, y_6, black); //black box (left)
+		draw_box(x_4, y_7, x_5, y_6, black); //black box (right)
+		}
 	} //closes while
 } //closes main
 
