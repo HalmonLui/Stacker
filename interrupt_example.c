@@ -30,7 +30,7 @@ int main(void)
 	volatile int * KEY_ptr = (int *) KEY_BASE;					// pushbutton KEY address
 
 	/* set the interval timer period for scrolling the HEX displays */
-	int counter = 5000000;				// 1/(100 MHz) x (5000000) = 50 msec
+	int counter = 0x17D78400;				// 1/(100 MHz) x (5000000) = 50 msec
 	*(interval_timer_ptr + 0x2) = (counter & 0xFFFF);
 	*(interval_timer_ptr + 0x3) = (counter >> 16) & 0xFFFF;
 

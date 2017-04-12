@@ -21,13 +21,13 @@ void draw_hline(int, int, int, int, int);
 void draw_vline(int, int, int, int, int);
 void draw_box(int, int, int, int, int);
 void plot_pixel(int, int, short int);
-
+void VGA_text (int, int, char*);
 int main(void)
 
 {
 	int xline1, xline2, lines, yline1, yline2,linesy;
 	int x_dir, x;
-	int red, black, blue;
+	int red, black, blue, green;
 	int x_0, y0, y1, y_2, y_3, y_4, y_5, y_6,y_7,y_8,y_9,y_10,y_11;
 	int x_1, x_2, x_3, x_4, x_5, x_6,x_7,x_8,x_9;
 	int x_0a, x_1a, x_2a, x_3a, x_4a, x_5a, x_6a, x_7a, x_8a, x_9a;
@@ -46,21 +46,7 @@ int main(void)
 
 	/* set the interval timer period */
 
-	int counter = 500000;		// 1/(50 MHz) x (0xBEBC20) = 250 msec	
-	//int counter = 0x02FAF080;		// 1/(50 MHz) x (0x02FAF080) = 1sec
-	*(interval_timer_ptr + 0x2) = (counter & 0xFFFF);
-	*(interval_timer_ptr + 0x3) = (counter >> 16) & 0xFFFF;
-
-	/* start interval timer, enable its interrupts */
-	*(interval_timer_ptr + 1) = 0x7; // STOP = 0, START = 1, CONT = 1, ITO = 1 
 	
-    *(PS2_ptr) = 0xFF;		// reset
-	*(PS2_ptr + 1) = 0x1; 	//write to the PS/2 Control register to enable interrupts
-
-	NIOS2_WRITE_IENABLE( 0xC3 );/* set interrupt mask bits for levels 0 (interval
-								* timer), 1 (pushbuttons), 6 (audio), and 7 (PS/2) */
-
-	NIOS2_WRITE_STATUS( 1 );		// enable Nios II interrupts
 
 
 	clear_screen ( );	// Normally make the VGA screen BLACK. 
@@ -91,15 +77,43 @@ int main(void)
 	//Coordinates for 4th row box
 	y_6 = 147;
 	y_7 = 117;
-	
+	//Coordinates for the 5th row box
+	y_8 = 116;
+	y_9 = 86;
+	//Coordinates for the 6th row box
+	y_10 = 85;
+	y_11 = 55;
 	
 	x_dir = 30;	//boxes move in intervals of 30 pixels
 	red = 0xF800;	// red
 	black = 0; //black
 	blue = 0x001F; //blue
-
+	green = 0x07E0; //green
+	char clear[100]="                                                                                                                                      \0";
+	char testing[80]="Welcome To (((STACKER)))\0";
+	char instructions[80]="Use switches to stop the box. Start with SW0.\0";
+	char rules[80]="To win, stack the box on top until you reach the green!\0";
+	VGA_text(1,1,testing);
 	while (1)
 	{
+
+int counter = 0x5F5E100;		// 1/(50 MHz) x (0xBEBC20) = 250 msec	
+	//int counter = 0x02FAF080;		// 1/(50 MHz) x (0x02FAF080) = 1sec
+	*(interval_timer_ptr + 0x2) = (counter & 0xFFFF);
+	*(interval_timer_ptr + 0x3) = (counter >> 16) & 0xFFFF;
+
+	/* start interval timer, enable its interrupts */
+	*(interval_timer_ptr + 1) = 0x7; // STOP = 0, START = 1, CONT = 1, ITO = 1 
+	
+    *(PS2_ptr) = 0xFF;		// reset
+	*(PS2_ptr + 1) = 0x1; 	//write to the PS/2 Control register to enable interrupts
+
+	NIOS2_WRITE_IENABLE( 0xC3 );/* set interrupt mask bits for levels 0 (interval
+								* timer), 1 (pushbuttons), 6 (audio), and 7 (PS/2) */
+
+	NIOS2_WRITE_STATUS( 1 );		// enable Nios II interrupts
+	
+	
 		while(!timeout)
 		{};
 		// Hold the line in current position 
@@ -127,6 +141,7 @@ int main(void)
 			xline1=xline1+30;//add 30 to left side
 			xline2=xline2+30;//add 30 to right side
 		}
+		draw_box(0, y_10, 320, y_9, green); //draws green line
 		x_0=x_0+x_dir;
 		x_1=x_1+x_dir;
 		x_2=x_2+x_dir;
@@ -244,6 +259,89 @@ int main(void)
 		draw_box(x_2, y_7, x_3, y_6, black); //black box (left)
 		draw_box(x_4, y_7, x_5, y_6, black); //black box (right)
 		}
+		
+		//Row E
+		if (SW_value == 15) {
+			x_0=x_0+x_dir;
+			x_1=x_1+x_dir;
+			x_2=x_2+x_dir;
+			x_3=x_3+x_dir;
+			x_4=x_4+x_dir;
+			x_5=x_5+x_dir;
+			x_6=x_6+x_dir;
+			x_7=x_7+x_dir;
+			x_8=x_8+x_dir;
+			x_9=x_9+x_dir;
+			x_0d=x_0;
+			x_1d=x_1;
+			x_2d=x_2;
+			x_3d=x_3;
+			x_4d=x_4;
+			x_5d=x_5;
+			x_6d=x_6;
+			x_7d=x_7;
+			x_8d=x_8;
+			x_9d=x_9;
+			draw_box(x_0c, y_7, x_1c, y_6, get_color(x_0c,170)); //draws black box
+			draw_box(x_6c, y_7, x_7c, y_6, get_color(x_6c,170)); //draws black box
+			draw_box(x_8c, y_7, x_9c, y_6, get_color(x_8c,170)); //draws black box
+			draw_box(x_2c, y_7, x_3c, y_6, black); //black box (left)
+			draw_box(x_4c, y_7, x_5c, y_6, black); //black box (right)
+			
+		draw_box(x_0, y_9, x_1, y_8, get_color(x_0c,y_7)); //draws red box
+		draw_box(x_6, y_9, x_7, y_8, get_color(x_6c,y_7)); //draws red box
+		draw_box(x_8, y_9, x_9, y_8, get_color(x_8c,y_7)); //draws red box
+		draw_box(x_2, y_9, x_3, y_8, black); //black box (left)
+		draw_box(x_4, y_9, x_5, y_8, black); //black box (right)
+		}
+
+		//Row F
+		if (SW_value == 31) {
+			x_0=x_0+x_dir;
+			x_1=x_1+x_dir;
+			x_2=x_2+x_dir;
+			x_3=x_3+x_dir;
+			x_4=x_4+x_dir;
+			x_5=x_5+x_dir;
+			x_6=x_6+x_dir;
+			x_7=x_7+x_dir;
+			x_8=x_8+x_dir;
+			x_9=x_9+x_dir;
+			x_0e=x_0;
+			x_1e=x_1;
+			x_2e=x_2;
+			x_3e=x_3;
+			x_4e=x_4;
+			x_5e=x_5;
+			x_6e=x_6;
+			x_7e=x_7;
+			x_8e=x_8;
+			x_9e=x_9;
+			draw_box(x_0d, y_9, x_1d, y_8, get_color(x_0d,140)); //draws black box
+			draw_box(x_6d, y_9, x_7d, y_8, get_color(x_6d,140)); //draws black box
+			draw_box(x_8d, y_9, x_9d, y_8, get_color(x_8d,140)); //draws black box
+			draw_box(x_2d, y_9, x_3d, y_8, black); //black box (left)
+			draw_box(x_4d, y_9, x_5d, y_8, black); //black box (right)
+			
+		draw_box(x_0, y_11, x_1, y_10, get_color(x_0d,y_9)); //draws red box
+		draw_box(x_6, y_11, x_7, y_10, get_color(x_6d,y_9)); //draws red box
+		draw_box(x_8, y_11, x_9, y_10, get_color(x_8d,y_9)); //draws red box
+		draw_box(x_2, y_11, x_3, y_10, black); //black box (left)
+		draw_box(x_4, y_11, x_5, y_10, black); //black box (right)
+		}
+		
+		//win or losing condition
+		if (SW_value == 63) {
+			if (get_color(x_0,y_11)==get_color(x_0e,y_9) || get_color(x_6,y_11)==get_color(x_6e,y_9) || get_color(x_8,y_11)==get_color(x_8e,y_9)){
+				char win[7] = "You Win\0";
+				VGA_text(20,9,win);
+			}	
+			draw_box(x_0e, y_11, x_1e, y_10, get_color(x_0e,110)); //draws black box
+			draw_box(x_6e, y_11, x_7e, y_10, get_color(x_6e,110)); //draws black box
+			draw_box(x_8e, y_11, x_9e, y_10, get_color(x_8e,110)); //draws black box
+			draw_box(x_2e, y_11, x_3e, y_10, black); //black box (left)
+			draw_box(x_4e, y_11, x_5e, y_10, black); //black box (right)
+		}
 	} //closes while
 } //closes main
 
@@ -338,4 +436,19 @@ int get_color(int x_vga, int y_vga) {
     //    return 0x17C0;
     //}
 	return color;
+}
+
+void VGA_text(int x, int y, char * text_ptr)
+{
+	int offset;
+  	volatile char * character_buffer = (char *) 0x09000000;	// VGA character buffer
+
+	/* assume that the text string fits on one line */
+	offset = (y << 7) + x;
+	while ( *(text_ptr) )
+	{
+		*(character_buffer + offset) = *(text_ptr);	// write to the character buffer
+		++text_ptr;
+		++offset;
+	}
 }
